@@ -1,0 +1,72 @@
+﻿Origo CI - evidencia da execucao publica
+Repositorio: https://github.com/ebiossanto/IA-RESEARCH-ORIGO-SYMBIOTA
+Run ID: 38192827682
+Workflow: Origo CI (push para main, commit 1130cb162c46ee6d53fa600412278ebeea7a5d50)
+Inicio: 2026-10-12T01:40:53Z   Fim: 2026-10-12T01:41:11Z
+Resultado: completed / success (5 de 5 jobs aprovadas)
+
+JOB rust: success [2026-10-12T01:40:56Z .. 2026-10-12T01:41:08Z]
+   [success] Set up job
+   [success] Run actions/checkout@v4
+   [success] Run dtolnay/rust-toolchain@stable
+   [success] Run cargo fmt --manifest-path origo-overlay/Cargo.toml --check
+   [success] Run cargo check --manifest-path origo-overlay/Cargo.toml
+   [success] Run cargo check --manifest-path origo-overlay/Cargo.toml --examples
+   [success] Run cargo test --manifest-path origo-overlay/Cargo.toml
+   [success] Run cargo clippy --manifest-path origo-overlay/Cargo.toml --all-targets -- -D warnings
+   [success] Post Run actions/checkout@v4
+   [success] Complete job
+
+JOB python (3.11): success [2026-10-12T01:40:56Z .. 2026-10-12T01:41:06Z]
+   [success] Set up job
+   [success] Run actions/checkout@v4
+   [success] Run actions/setup-python@v5
+   [success] Run python -m pip install -e ./origo-alpha-ast
+   [success] Run python -m unittest discover -s origo-alpha-ast/tests -v
+   [success] Run python -m unittest discover -s tests -v
+   [success] Run python scripts/run_all_vectors.py
+   [success] Run python -m pip wheel ./origo-alpha-ast --no-deps -w dist
+   [success] Post Run actions/setup-python@v5
+   [success] Post Run actions/checkout@v4
+   [success] Complete job
+
+JOB python (3.13): success [2026-10-12T01:40:56Z .. 2026-10-12T01:41:06Z]
+   [success] Set up job
+   [success] Run actions/checkout@v4
+   [success] Run actions/setup-python@v5
+   [success] Run python -m pip install -e ./origo-alpha-ast
+   [success] Run python -m unittest discover -s origo-alpha-ast/tests -v
+   [success] Run python -m unittest discover -s tests -v
+   [success] Run python scripts/run_all_vectors.py
+   [success] Run python -m pip wheel ./origo-alpha-ast --no-deps -w dist
+   [success] Post Run actions/setup-python@v5
+   [success] Post Run actions/checkout@v4
+   [success] Complete job
+
+JOB python (3.12): success [2026-10-12T01:40:56Z .. 2026-10-12T01:41:07Z]
+   [success] Set up job
+   [success] Run actions/checkout@v4
+   [success] Run actions/setup-python@v5
+   [success] Run python -m pip install -e ./origo-alpha-ast
+   [success] Run python -m unittest discover -s origo-alpha-ast/tests -v
+   [success] Run python -m unittest discover -s tests -v
+   [success] Run python scripts/run_all_vectors.py
+   [success] Run python -m pip wheel ./origo-alpha-ast --no-deps -w dist
+   [success] Post Run actions/setup-python@v5
+   [success] Post Run actions/checkout@v4
+   [success] Complete job
+
+JOB python (3.10): success [2026-10-12T01:40:56Z .. 2026-10-12T01:41:11Z]
+   [success] Set up job
+   [success] Run actions/checkout@v4
+   [success] Run actions/setup-python@v5
+   [success] Run python -m pip install -e ./origo-alpha-ast
+   [success] Run python -m unittest discover -s origo-alpha-ast/tests -v
+   [success] Run python -m unittest discover -s tests -v
+   [success] Run python scripts/run_all_vectors.py
+   [success] Run python -m pip wheel ./origo-alpha-ast --no-deps -w dist
+   [success] Post Run actions/setup-python@v5
+   [success] Post Run actions/checkout@v4
+   [success] Complete job
+
+URL: https://github.com/ebiossanto/IA-RESEARCH-ORIGO-SYMBIOTA/actions/runs/38192827682

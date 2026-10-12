@@ -41,6 +41,7 @@ eb7d6f619656c7892b40f81d8ab4bc2486c529d6cf67464618af36149c54242c  artifacts/orig
 26c90bb8b093d3a19a45dadc324983cc8f8a7b9d53f1f71fde1f65552a324d1e  docs/VALIDATION_REPORT.md
 19336e8f9d3197047157585ba5524acd61abe105496d9bd91347d358d934083c  docs/evidence/validate-2026-10-11.log
 f341629160966bf9357578e3c604cb9a5f3c0ddec770402519fe69ef22c13c0a  docs/evidence/environment-2026-10-11.txt
+43612b6907e3ffde4c94c09849c9066acaa8809dc67ae3265d74da7614cc2bf6  docs/evidence/ci-run-38192827682.txt
 ```
 
 Os dois primeiros valores são idênticos aos registrados em
@@ -72,6 +73,18 @@ Get-FileHash docs\VALIDATION_REPORT.md -Algorithm SHA256
 
 ```bash
 ./scripts/validate.sh   # saída final esperada: VALIDATION PASSED
+```
+
+## 7. Validação independente em CI pública
+
+O mesmo commit foi validado por máquina independente no GitHub Actions
+([Origo CI — run 38192827682](https://github.com/ebiossanto/IA-RESEARCH-ORIGO-SYMBIOTA/actions/runs/38192827682)):
+
+```text
+conclusão: completed / success — 5 de 5 jobs aprovadas
+python (3.10, 3.11, 3.12, 3.13) → install, 20+1 testes, 635 vetores, wheel: success
+rust → fmt --check, check, check --examples, test, clippy -D warnings: success
+evidência: docs/evidence/ci-run-38192827682.txt
 ```
 
 *Documento gerado como parte da publicação do repositório. O relatório completo
