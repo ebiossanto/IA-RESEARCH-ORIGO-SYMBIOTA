@@ -1,0 +1,18 @@
+{
+  "ast_schema": "cpython-ast-3.12",
+  "binding_policy": {
+    "attributes": "preserve_name",
+    "captures": "preserve_name",
+    "globals": "preserve_name",
+    "locals": "lexical_slot",
+    "parameters": "lexical_slot"
+  },
+  "canonical_size": 327,
+  "compact": "origo-alpha-ast-v1:python:cpython-ast-3.12:sha256:db4b589b54ed63a4e8fc696025c7161eaa42c82b294c99052fbe370336870385",
+  "digest": "db4b589b54ed63a4e8fc696025c7161eaa42c82b294c99052fbe370336870385",
+  "digest_algorithm": "sha256",
+  "kind": "alpha_ast_hash",
+  "language": "python",
+  "language_version": "3.12",
+  "profile": "origo-alpha-ast-v1"
+}

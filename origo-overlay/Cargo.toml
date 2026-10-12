@@ -1,0 +1,17 @@
+[package]
+name = "origo-overlay"
+version = "0.3.0"
+edition = "2024"
+description = "Safe, explicit provenance overlay language for host source code"
+license = "MIT OR Apache-2.0"
+
+[lib]
+name = "origo_overlay"
+path = "src/lib.rs"
+
+[[bin]]
+name = "origo-overlay"
+path = "src/main.rs"
+
+[dependencies]
+sha2 = "0.11.0"

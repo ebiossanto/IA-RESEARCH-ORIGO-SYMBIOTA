@@ -1,0 +1,903 @@
+[
+  {
+    "id": "parameter_rename",
+    "description": "Renomeação consistente de parâmetro deve preservar o hash.",
+    "left": "lambda x: x * 2",
+    "right": "lambda valor: valor * 2",
+    "expect_equal": true
+  },
+  {
+    "id": "local_rename",
+    "description": "Renomeação consistente de parâmetro e variável local deve preservar o hash.",
+    "left": "def f(x):\n    y = x + 1\n    return y * y\n",
+    "right": "def f(valor):\n    resultado = valor + 1\n    return resultado * resultado\n",
+    "selector": "f",
+    "expect_equal": true
+  },
+  {
+    "id": "formatting_only",
+    "description": "Espaçamento e comentários comuns não entram na AST normalizada.",
+    "left": "lambda x: x + 1",
+    "right": "lambda x : (x + 1)  # comentário\n",
+    "expect_equal": true
+  },
+  {
+    "id": "parameter_order_usage",
+    "description": "Trocar a ordem de uso de parâmetros muda a estrutura.",
+    "left": "lambda a, b: a - b",
+    "right": "lambda a, b: b - a",
+    "expect_equal": false
+  },
+  {
+    "id": "attribute_change",
+    "description": "Nomes de atributos são preservados.",
+    "left": "lambda item: item.preco",
+    "right": "lambda item: item.quantidade",
+    "expect_equal": false
+  },
+  {
+    "id": "literal_change",
+    "description": "Mudança de literal deve alterar o hash.",
+    "left": "lambda x: x * 2",
+    "right": "lambda x: x * 3",
+    "expect_equal": false
+  },
+  {
+    "id": "external_call_change",
+    "description": "Referências externas são preservadas.",
+    "left": "lambda x: validar(x)",
+    "right": "lambda x: excluir(x)",
+    "expect_equal": false
+  },
+  {
+    "id": "capture_name_change",
+    "description": "Capturas livres preservam identidade por nome no perfil v1.",
+    "left": "lambda x: x * taxa",
+    "right": "lambda x: x * desconto",
+    "expect_equal": false
+  },
+  {
+    "id": "statement_order",
+    "description": "A ordem dos statements é preservada.",
+    "left": "def f(x):\n    a = log(x)\n    b = save(x)\n    return a + b\n",
+    "right": "def f(x):\n    b = save(x)\n    a = log(x)\n    return a + b\n",
+    "selector": "f",
+    "expect_equal": false
+  },
+  {
+    "id": "nested_alpha_equivalence",
+    "description": "Bindings locais em função aninhada também são normalizados.",
+    "left": "def outer(x):\n    return lambda y: x + y\n",
+    "right": "def outer(valor):\n    return lambda item: valor + item\n",
+    "selector": "outer",
+    "expect_equal": true
+  },
+  {
+    "id": "default_value_change",
+    "description": "Defaults fazem parte da identidade estrutural.",
+    "left": "lambda x=1: x * 2",
+    "right": "lambda x=2: x * 2",
+    "expect_equal": false
+  },
+  {
+    "id": "async_difference",
+    "description": "Função síncrona e assíncrona são estruturalmente distintas.",
+    "left": "def f(x):\n    return processar(x)\n",
+    "right": "async def f(x):\n    return await processar(x)\n",
+    "selector": "f",
+    "expect_equal": false
+  },
+  {
+    "id": "list_comprehension_target_rename",
+    "category": "comprehension",
+    "description": "Renomear consistentemente o binding local de uma list comprehension preserva o hash.",
+    "left": "lambda itens: [item * 2 for item in itens]",
+    "right": "lambda valores: [valor * 2 for valor in valores]",
+    "expect_equal": true
+  },
+  {
+    "id": "list_comprehension_filter_target_rename",
+    "category": "comprehension",
+    "description": "O binding da comprehension também é normalizado dentro de filtros.",
+    "left": "lambda itens: [item.preco for item in itens if item.ativo]",
+    "right": "lambda dados: [registro.preco for registro in dados if registro.ativo]",
+    "expect_equal": true
+  },
+  {
+    "id": "nested_comprehension_target_rename",
+    "category": "comprehension",
+    "description": "Bindings em generators sucessivos preservam relações lexicais.",
+    "left": "lambda matriz: [valor for linha in matriz for valor in linha]",
+    "right": "lambda dados: [elemento for grupo in dados for elemento in grupo]",
+    "expect_equal": true
+  },
+  {
+    "id": "dict_comprehension_target_rename",
+    "category": "comprehension",
+    "description": "Chave e valor de dict comprehension usam os mesmos bindings normalizados.",
+    "left": "lambda itens: {item.id: item.preco for item in itens}",
+    "right": "lambda registros: {registro.id: registro.preco for registro in registros}",
+    "expect_equal": true
+  },
+  {
+    "id": "generator_expression_target_rename",
+    "category": "comprehension",
+    "description": "Generator expressions são alfa-equivalentes sob renomeação do alvo.",
+    "left": "lambda itens: sum(item.valor for item in itens)",
+    "right": "lambda dados: sum(registro.valor for registro in dados)",
+    "expect_equal": true
+  },
+  {
+    "id": "comprehension_attribute_change",
+    "category": "comprehension",
+    "description": "Mudar o atributo acessado dentro da comprehension altera o hash.",
+    "left": "lambda itens: [item.preco for item in itens]",
+    "right": "lambda itens: [item.quantidade for item in itens]",
+    "expect_equal": false
+  },
+  {
+    "id": "comprehension_filter_change",
+    "category": "comprehension",
+    "description": "Mudar a condição de filtro altera a estrutura.",
+    "left": "lambda itens: [item for item in itens if item.ativo]",
+    "right": "lambda itens: [item for item in itens if item.bloqueado]",
+    "expect_equal": false
+  },
+  {
+    "id": "comprehension_generator_order_change",
+    "category": "comprehension",
+    "description": "Mudar a ordem dos generators altera o hash.",
+    "left": "lambda xs, ys: [(x, y) for x in xs for y in ys]",
+    "right": "lambda xs, ys: [(x, y) for y in ys for x in xs]",
+    "expect_equal": false
+  },
+  {
+    "id": "decorated_function_local_rename",
+    "category": "decorator",
+    "description": "Renomeações locais preservam o hash quando o decorator permanece igual.",
+    "left": "@auditar\ndef calcular(x):\n    resultado = x * 2\n    return resultado\n",
+    "right": "@auditar\ndef calcular(valor):\n    total = valor * 2\n    return total\n",
+    "selector": "calcular",
+    "expect_equal": true
+  },
+  {
+    "id": "decorator_name_change",
+    "category": "decorator",
+    "description": "Trocar o decorator externo altera o hash.",
+    "left": "@auditar\ndef calcular(x):\n    return x * 2\n",
+    "right": "@autorizar\ndef calcular(x):\n    return x * 2\n",
+    "selector": "calcular",
+    "expect_equal": false
+  },
+  {
+    "id": "decorator_argument_change",
+    "category": "decorator",
+    "description": "Argumentos de decorators fazem parte da identidade estrutural.",
+    "left": "@cache(ttl=60)\ndef carregar(x):\n    return buscar(x)\n",
+    "right": "@cache(ttl=120)\ndef carregar(x):\n    return buscar(x)\n",
+    "selector": "carregar",
+    "expect_equal": false
+  },
+  {
+    "id": "decorator_order_change",
+    "category": "decorator",
+    "description": "A ordem dos decorators é semanticamente relevante e altera o hash.",
+    "left": "@auditar\n@cache\ndef calcular(x):\n    return x * 2\n",
+    "right": "@cache\n@auditar\ndef calcular(x):\n    return x * 2\n",
+    "selector": "calcular",
+    "expect_equal": false
+  },
+  {
+    "id": "decorator_attribute_change",
+    "category": "decorator",
+    "description": "Caminhos de atributos em decorators são preservados.",
+    "left": "@seguranca.auditar\ndef calcular(x):\n    return x * 2\n",
+    "right": "@seguranca.autorizar\ndef calcular(x):\n    return x * 2\n",
+    "selector": "calcular",
+    "expect_equal": false
+  },
+  {
+    "id": "nested_list_comprehension_alpha_rename",
+    "category": "nested_comprehension",
+    "description": "Comprehension usada como elemento de outra comprehension preserva alfa-equivalencia.",
+    "left": "lambda matriz: [[valor * 2 for valor in linha] for linha in matriz]",
+    "right": "lambda dados: [[elemento * 2 for elemento in grupo] for grupo in dados]",
+    "expect_equal": true
+  },
+  {
+    "id": "nested_comprehension_outer_binding_reference",
+    "category": "nested_comprehension",
+    "description": "A comprehension interna pode capturar o binding da comprehension externa.",
+    "left": "lambda xs, ys: [[x + y for y in ys] for x in xs]",
+    "right": "lambda valores, pesos: [[valor + peso for peso in pesos] for valor in valores]",
+    "expect_equal": true
+  },
+  {
+    "id": "nested_comprehension_inner_attribute_change",
+    "category": "nested_comprehension",
+    "description": "Alterar atributo no nivel interno muda o hash.",
+    "left": "lambda grupos: [[item.preco for item in grupo] for grupo in grupos]",
+    "right": "lambda grupos: [[item.quantidade for item in grupo] for grupo in grupos]",
+    "expect_equal": false
+  },
+  {
+    "id": "nested_comprehension_inner_filter_change",
+    "category": "nested_comprehension",
+    "description": "Alterar filtro da comprehension interna muda o hash.",
+    "left": "lambda grupos: [[item for item in grupo if item.ativo] for grupo in grupos]",
+    "right": "lambda grupos: [[item for item in grupo if item.bloqueado] for grupo in grupos]",
+    "expect_equal": false
+  },
+  {
+    "id": "nested_dict_list_comprehension_alpha_rename",
+    "category": "nested_comprehension",
+    "description": "Dict comprehension contendo list comprehension normaliza ambos os escopos.",
+    "left": "lambda grupos: {grupo.id: [item.valor for item in grupo.itens] for grupo in grupos}",
+    "right": "lambda colecoes: {colecao.id: [registro.valor for registro in colecao.itens] for colecao in colecoes}",
+    "expect_equal": true
+  },
+  {
+    "id": "nested_generator_expression_alpha_rename",
+    "category": "nested_comprehension",
+    "description": "Generator expression aninhada preserva bindings internos e externos.",
+    "left": "lambda grupos: sum(sum(item.valor for item in grupo) for grupo in grupos)",
+    "right": "lambda colecoes: sum(sum(registro.valor for registro in colecao) for colecao in colecoes)",
+    "expect_equal": true
+  },
+  {
+    "id": "nested_comprehension_generator_order_change",
+    "category": "nested_comprehension",
+    "description": "Trocar a estrutura dos niveis de comprehension altera o hash.",
+    "left": "lambda xs, ys: [[x + y for y in ys] for x in xs]",
+    "right": "lambda xs, ys: [[x + y for x in xs] for y in ys]",
+    "expect_equal": false
+  },
+  {
+    "id": "decorator_call_with_lambda_alpha_rename",
+    "category": "decorator_lambda_call",
+    "description": "Lambda passada a decorator call e alfa-equivalente sob renomeacao local.",
+    "left": "@registrar(lambda item: item.id)\ndef carregar(x):\n    return x\n",
+    "right": "@registrar(lambda registro: registro.id)\ndef carregar(valor):\n    return valor\n",
+    "selector": "carregar",
+    "expect_equal": true
+  },
+  {
+    "id": "decorator_call_lambda_attribute_change",
+    "category": "decorator_lambda_call",
+    "description": "Alterar atributo dentro da lambda do decorator muda o hash.",
+    "left": "@registrar(lambda item: item.id)\ndef carregar(x):\n    return x\n",
+    "right": "@registrar(lambda item: item.codigo)\ndef carregar(x):\n    return x\n",
+    "selector": "carregar",
+    "expect_equal": false
+  },
+  {
+    "id": "decorator_nested_call_with_lambda_alpha_rename",
+    "category": "decorator_lambda_call",
+    "description": "Chamadas aninhadas no decorator preservam alfa-equivalencia da lambda.",
+    "left": "@configurar(politica(lambda valor: validar(valor)))\ndef executar(x):\n    return x\n",
+    "right": "@configurar(politica(lambda entrada: validar(entrada)))\ndef executar(item):\n    return item\n",
+    "selector": "executar",
+    "expect_equal": true
+  },
+  {
+    "id": "decorator_nested_call_callee_change",
+    "category": "decorator_lambda_call",
+    "description": "Alterar a funcao chamada dentro da lambda do decorator muda o hash.",
+    "left": "@configurar(politica(lambda valor: validar(valor)))\ndef executar(x):\n    return x\n",
+    "right": "@configurar(politica(lambda valor: autorizar(valor)))\ndef executar(x):\n    return x\n",
+    "selector": "executar",
+    "expect_equal": false
+  },
+  {
+    "id": "decorator_factory_call_change",
+    "category": "decorator_lambda_call",
+    "description": "Alterar a factory externa do decorator muda o hash.",
+    "left": "@configurar(politica(lambda valor: validar(valor)))\ndef executar(x):\n    return x\n",
+    "right": "@configurar(regra(lambda valor: validar(valor)))\ndef executar(x):\n    return x\n",
+    "selector": "executar",
+    "expect_equal": false
+  },
+  {
+    "id": "decorator_keyword_lambda_alpha_rename",
+    "category": "decorator_lambda_call",
+    "description": "Lambda em argumento nomeado de decorator call e alfa-normalizada.",
+    "left": "@rota(\"/itens\", parser=lambda dado: dado.id)\ndef listar(x):\n    return x\n",
+    "right": "@rota(\"/itens\", parser=lambda registro: registro.id)\ndef listar(valor):\n    return valor\n",
+    "selector": "listar",
+    "expect_equal": true
+  },
+  {
+    "id": "decorator_keyword_lambda_literal_change",
+    "category": "decorator_lambda_call",
+    "description": "Alterar literal da chamada decoradora muda o hash.",
+    "left": "@rota(\"/itens\", parser=lambda dado: dado.id)\ndef listar(x):\n    return x\n",
+    "right": "@rota(\"/produtos\", parser=lambda dado: dado.id)\ndef listar(x):\n    return x\n",
+    "selector": "listar",
+    "expect_equal": false
+  },
+  {
+    "id": "decorator_lambda_capture_change",
+    "category": "decorator_lambda_call",
+    "description": "Alterar referencia livre capturada pela lambda do decorator muda o hash.",
+    "left": "@registrar(lambda item: item.valor * taxa)\ndef calcular(x):\n    return x\n",
+    "right": "@registrar(lambda item: item.valor * desconto)\ndef calcular(x):\n    return x\n",
+    "selector": "calcular",
+    "expect_equal": false
+  },
+  {
+    "id": "async_list_comprehension_alpha_rename",
+    "category": "async_comprehension",
+    "description": "Renomeacoes consistentes em async comprehension preservam o hash.",
+    "left": "async def coletar(fonte):\n    return [item.valor async for item in fonte]\n",
+    "right": "async def coletar(origem):\n    return [registro.valor async for registro in origem]\n",
+    "selector": "coletar",
+    "expect_equal": true
+  },
+  {
+    "id": "async_comprehension_filter_alpha_rename",
+    "category": "async_comprehension",
+    "description": "O binding assíncrono é normalizado no filtro e no elemento.",
+    "left": "async def coletar(fonte):\n    return [item.valor async for item in fonte if item.ativo]\n",
+    "right": "async def coletar(origem):\n    return [registro.valor async for registro in origem if registro.ativo]\n",
+    "selector": "coletar",
+    "expect_equal": true
+  },
+  {
+    "id": "async_generator_expression_alpha_rename",
+    "category": "async_comprehension",
+    "description": "Generator expression assíncrona preserva alfa-equivalência.",
+    "left": "async def totalizar(fonte):\n    return sum(item.valor async for item in fonte)\n",
+    "right": "async def totalizar(origem):\n    return sum(registro.valor async for registro in origem)\n",
+    "selector": "totalizar",
+    "expect_equal": true
+  },
+  {
+    "id": "nested_async_comprehension_alpha_rename",
+    "category": "async_comprehension",
+    "description": "Comprehensions assíncronas aninhadas preservam bindings entre níveis.",
+    "left": "async def coletar(fontes):\n    return [[item.valor async for item in fonte] async for fonte in fontes]\n",
+    "right": "async def coletar(origens):\n    return [[registro.valor async for registro in origem] async for origem in origens]\n",
+    "selector": "coletar",
+    "expect_equal": true
+  },
+  {
+    "id": "mixed_async_sync_generators_alpha_rename",
+    "category": "async_comprehension",
+    "description": "Comprehension com generator assíncrono e generator síncrono mantém relações lexicais.",
+    "left": "async def combinar(fontes):\n    return [(grupo.id, item) async for grupo in fontes for item in grupo.itens]\n",
+    "right": "async def combinar(origens):\n    return [(colecao.id, registro) async for colecao in origens for registro in colecao.itens]\n",
+    "selector": "combinar",
+    "expect_equal": true
+  },
+  {
+    "id": "async_vs_sync_comprehension",
+    "category": "async_comprehension",
+    "description": "Generator assíncrono e síncrono são estruturalmente distintos.",
+    "left": "async def coletar(fonte):\n    return [item async for item in fonte]\n",
+    "right": "async def coletar(fonte):\n    return [item for item in fonte]\n",
+    "selector": "coletar",
+    "expect_equal": false
+  },
+  {
+    "id": "async_comprehension_filter_change",
+    "category": "async_comprehension",
+    "description": "Alterar o filtro de async comprehension muda o hash.",
+    "left": "async def coletar(fonte):\n    return [item async for item in fonte if item.ativo]\n",
+    "right": "async def coletar(fonte):\n    return [item async for item in fonte if item.bloqueado]\n",
+    "selector": "coletar",
+    "expect_equal": false
+  },
+  {
+    "id": "async_comprehension_attribute_change",
+    "category": "async_comprehension",
+    "description": "Alterar atributo no elemento assíncrono muda o hash.",
+    "left": "async def coletar(fonte):\n    return [item.preco async for item in fonte]\n",
+    "right": "async def coletar(fonte):\n    return [item.quantidade async for item in fonte]\n",
+    "selector": "coletar",
+    "expect_equal": false
+  },
+  {
+    "id": "decorator_closure_alpha_rename",
+    "category": "decorator_closure",
+    "description": "Closure aninhada em decorator preserva alfa-equivalência dos dois níveis.",
+    "left": "@registrar((lambda fator: lambda valor: valor * fator)(2))\ndef calcular(x):\n    return x\n",
+    "right": "@registrar((lambda multiplicador: lambda entrada: entrada * multiplicador)(2))\ndef calcular(item):\n    return item\n",
+    "selector": "calcular",
+    "expect_equal": true
+  },
+  {
+    "id": "decorator_closure_capture_relation_change",
+    "category": "decorator_closure",
+    "description": "Trocar uso da captura por referência externa altera o hash.",
+    "left": "@registrar((lambda fator: lambda valor: valor * fator)(2))\ndef calcular(x):\n    return x\n",
+    "right": "@registrar((lambda fator: lambda valor: valor * taxa)(2))\ndef calcular(x):\n    return x\n",
+    "selector": "calcular",
+    "expect_equal": false
+  },
+  {
+    "id": "decorator_closure_literal_change",
+    "category": "decorator_closure",
+    "description": "Alterar o valor usado para criar a closure decoradora muda o hash.",
+    "left": "@registrar((lambda fator: lambda valor: valor * fator)(2))\ndef calcular(x):\n    return x\n",
+    "right": "@registrar((lambda fator: lambda valor: valor * fator)(3))\ndef calcular(x):\n    return x\n",
+    "selector": "calcular",
+    "expect_equal": false
+  },
+  {
+    "id": "decorator_closure_operator_change",
+    "category": "decorator_closure",
+    "description": "Alterar operador no corpo da closure muda o hash.",
+    "left": "@registrar((lambda fator: lambda valor: valor * fator)(2))\ndef calcular(x):\n    return x\n",
+    "right": "@registrar((lambda fator: lambda valor: valor + fator)(2))\ndef calcular(x):\n    return x\n",
+    "selector": "calcular",
+    "expect_equal": false
+  },
+  {
+    "id": "decorator_closure_keyword_alpha_rename",
+    "category": "decorator_closure",
+    "description": "Closure em argumento nomeado de decorator é alfa-normalizada.",
+    "left": "@rota(\"/itens\", transformador=(lambda prefixo: lambda valor: prefixo + valor)(\"id:\"))\ndef listar(x):\n    return x\n",
+    "right": "@rota(\"/itens\", transformador=(lambda inicio: lambda entrada: inicio + entrada)(\"id:\"))\ndef listar(item):\n    return item\n",
+    "selector": "listar",
+    "expect_equal": true
+  },
+  {
+    "id": "decorator_closure_keyword_literal_change",
+    "category": "decorator_closure",
+    "description": "Alterar literal capturado pela closure decoradora muda o hash.",
+    "left": "@rota(\"/itens\", transformador=(lambda prefixo: lambda valor: prefixo + valor)(\"id:\"))\ndef listar(x):\n    return x\n",
+    "right": "@rota(\"/itens\", transformador=(lambda prefixo: lambda valor: prefixo + valor)(\"codigo:\"))\ndef listar(x):\n    return x\n",
+    "selector": "listar",
+    "expect_equal": false
+  },
+  {
+    "id": "decorator_triple_nested_closure_alpha_rename",
+    "category": "decorator_closure",
+    "description": "Três níveis de closures preservam profundidade e slots sob renomeação.",
+    "left": "@usar((lambda a: lambda b: lambda c: a + b + c)(1)(2))\ndef executar(x):\n    return x\n",
+    "right": "@usar((lambda primeiro: lambda segundo: lambda terceiro: primeiro + segundo + terceiro)(1)(2))\ndef executar(valor):\n    return valor\n",
+    "selector": "executar",
+    "expect_equal": true
+  },
+  {
+    "id": "decorator_closure_binding_order_change",
+    "category": "decorator_closure",
+    "description": "Trocar a ordem de uso das capturas mantém nomes irrelevantes, mas altera a estrutura.",
+    "left": "@usar((lambda a: lambda b: lambda c: a - b - c)(1)(2))\ndef executar(x):\n    return x\n",
+    "right": "@usar((lambda a: lambda b: lambda c: b - a - c)(1)(2))\ndef executar(x):\n    return x\n",
+    "selector": "executar",
+    "expect_equal": false
+  },
+  {
+    "id": "nested_async_generator_expression_alpha_rename",
+    "category": "nested_async_generator",
+    "description": "Generator expressions assíncronas aninhadas preservam equivalência alfa em todos os níveis.",
+    "left": "async def totalizar(fontes):\n    return sum(sum(item.valor async for item in fonte) async for fonte in fontes)\n",
+    "right": "async def totalizar(origens):\n    return sum(sum(registro.valor async for registro in origem) async for origem in origens)\n",
+    "selector": "totalizar",
+    "expect_equal": true
+  },
+  {
+    "id": "nested_async_generator_outer_reference",
+    "category": "nested_async_generator",
+    "description": "O generator assíncrono interno pode referenciar o binding assíncrono externo.",
+    "left": "async def combinar(fontes, pesos):\n    return sum(sum(item.valor * fonte.fator async for item in fonte) async for fonte in fontes)\n",
+    "right": "async def combinar(origens, pesos):\n    return sum(sum(registro.valor * origem.fator async for registro in origem) async for origem in origens)\n",
+    "selector": "combinar",
+    "expect_equal": true
+  },
+  {
+    "id": "nested_async_generator_with_await_alpha_rename",
+    "category": "nested_async_generator",
+    "description": "Await no elemento interno é preservado com renomeação alfa dos bindings.",
+    "left": "async def carregar(fontes):\n    return [await transformar(item) async for fonte in fontes async for item in fonte]\n",
+    "right": "async def carregar(origens):\n    return [await transformar(registro) async for origem in origens async for registro in origem]\n",
+    "selector": "carregar",
+    "expect_equal": true
+  },
+  {
+    "id": "nested_async_generator_mixed_levels_alpha_rename",
+    "category": "nested_async_generator",
+    "description": "Níveis async e sync aninhados mantêm slots e profundidades sob renomeação.",
+    "left": "async def expandir(fontes):\n    return [subitem async for fonte in fontes for item in fonte.itens async for subitem in item]\n",
+    "right": "async def expandir(origens):\n    return [elemento async for origem in origens for registro in origem.itens async for elemento in registro]\n",
+    "selector": "expandir",
+    "expect_equal": true
+  },
+  {
+    "id": "nested_async_generator_inner_attribute_change",
+    "category": "nested_async_generator",
+    "description": "Alterar atributo no generator assíncrono interno muda o hash.",
+    "left": "async def totalizar(fontes):\n    return sum(sum(item.preco async for item in fonte) async for fonte in fontes)\n",
+    "right": "async def totalizar(fontes):\n    return sum(sum(item.quantidade async for item in fonte) async for fonte in fontes)\n",
+    "selector": "totalizar",
+    "expect_equal": false
+  },
+  {
+    "id": "nested_async_generator_await_callee_change",
+    "category": "nested_async_generator",
+    "description": "Alterar a função aguardada dentro do generator altera o hash.",
+    "left": "async def carregar(fontes):\n    return [await transformar(item) async for fonte in fontes async for item in fonte]\n",
+    "right": "async def carregar(fontes):\n    return [await validar(item) async for fonte in fontes async for item in fonte]\n",
+    "selector": "carregar",
+    "expect_equal": false
+  },
+  {
+    "id": "nested_async_generator_level_mode_change",
+    "category": "nested_async_generator",
+    "description": "Trocar apenas o nível interno de async for para for altera a estrutura.",
+    "left": "async def carregar(fontes):\n    return [item async for fonte in fontes async for item in fonte]\n",
+    "right": "async def carregar(fontes):\n    return [item async for fonte in fontes for item in fonte]\n",
+    "selector": "carregar",
+    "expect_equal": false
+  },
+  {
+    "id": "nested_async_generator_filter_change",
+    "category": "nested_async_generator",
+    "description": "Alterar o filtro de um nível assíncrono interno muda o hash.",
+    "left": "async def carregar(fontes):\n    return [item async for fonte in fontes async for item in fonte if item.ativo]\n",
+    "right": "async def carregar(fontes):\n    return [item async for fonte in fontes async for item in fonte if item.bloqueado]\n",
+    "selector": "carregar",
+    "expect_equal": false
+  },
+  {
+    "id": "chained_decorators_closure_alpha_rename",
+    "category": "chained_decorator_closure",
+    "description": "Decorators encadeados com closures preservam equivalência alfa em cada closure.",
+    "left": "@auditar((lambda prefixo: lambda valor: prefixo + valor)(\"A:\"))\n@transformar((lambda fator: lambda valor: valor * fator)(2))\ndef calcular(x):\n    return x\n",
+    "right": "@auditar((lambda inicio: lambda entrada: inicio + entrada)(\"A:\"))\n@transformar((lambda multiplicador: lambda item: item * multiplicador)(2))\ndef calcular(valor):\n    return valor\n",
+    "selector": "calcular",
+    "expect_equal": true
+  },
+  {
+    "id": "chained_decorators_order_change",
+    "category": "chained_decorator_closure",
+    "description": "Trocar a ordem de decorators encadeados altera o hash.",
+    "left": "@auditar((lambda p: lambda v: p + v)(\"A:\"))\n@transformar((lambda f: lambda v: v * f)(2))\ndef calcular(x):\n    return x\n",
+    "right": "@transformar((lambda f: lambda v: v * f)(2))\n@auditar((lambda p: lambda v: p + v)(\"A:\"))\ndef calcular(x):\n    return x\n",
+    "selector": "calcular",
+    "expect_equal": false
+  },
+  {
+    "id": "chained_decorators_inner_literal_change",
+    "category": "chained_decorator_closure",
+    "description": "Alterar literal de criação em uma closure da cadeia muda o hash.",
+    "left": "@auditar((lambda p: lambda v: p + v)(\"A:\"))\n@transformar((lambda f: lambda v: v * f)(2))\ndef calcular(x):\n    return x\n",
+    "right": "@auditar((lambda p: lambda v: p + v)(\"B:\"))\n@transformar((lambda f: lambda v: v * f)(2))\ndef calcular(x):\n    return x\n",
+    "selector": "calcular",
+    "expect_equal": false
+  },
+  {
+    "id": "chained_decorators_second_closure_operator_change",
+    "category": "chained_decorator_closure",
+    "description": "Alterar operador da segunda closure decoradora muda o hash.",
+    "left": "@auditar((lambda p: lambda v: p + v)(\"A:\"))\n@transformar((lambda f: lambda v: v * f)(2))\ndef calcular(x):\n    return x\n",
+    "right": "@auditar((lambda p: lambda v: p + v)(\"A:\"))\n@transformar((lambda f: lambda v: v + f)(2))\ndef calcular(x):\n    return x\n",
+    "selector": "calcular",
+    "expect_equal": false
+  },
+  {
+    "id": "chained_decorators_three_levels_alpha_rename",
+    "category": "chained_decorator_closure",
+    "description": "Três decorators com closures independentes preservam equivalência alfa.",
+    "left": "@primeiro((lambda a: lambda x: a + x)(1))\n@segundo((lambda b: lambda x: x * b)(2))\n@terceiro((lambda c: lambda x: x - c)(3))\ndef executar(x):\n    return x\n",
+    "right": "@primeiro((lambda inicio: lambda valor: inicio + valor)(1))\n@segundo((lambda fator: lambda valor: valor * fator)(2))\n@terceiro((lambda ajuste: lambda valor: valor - ajuste)(3))\ndef executar(item):\n    return item\n",
+    "selector": "executar",
+    "expect_equal": true
+  },
+  {
+    "id": "chained_decorators_factory_change",
+    "category": "chained_decorator_closure",
+    "description": "Alterar a factory de um decorator na cadeia muda o hash.",
+    "left": "@auditar((lambda p: lambda v: p + v)(\"A:\"))\n@transformar((lambda f: lambda v: v * f)(2))\ndef calcular(x):\n    return x\n",
+    "right": "@registrar((lambda p: lambda v: p + v)(\"A:\"))\n@transformar((lambda f: lambda v: v * f)(2))\ndef calcular(x):\n    return x\n",
+    "selector": "calcular",
+    "expect_equal": false
+  },
+  {
+    "id": "chained_decorators_external_capture_change",
+    "category": "chained_decorator_closure",
+    "description": "Alterar referência livre em uma closure de decorator encadeado muda o hash.",
+    "left": "@auditar(lambda valor: valor * taxa)\n@transformar(lambda valor: valor + ajuste)\ndef calcular(x):\n    return x\n",
+    "right": "@auditar(lambda valor: valor * desconto)\n@transformar(lambda valor: valor + ajuste)\ndef calcular(x):\n    return x\n",
+    "selector": "calcular",
+    "expect_equal": false
+  },
+  {
+    "id": "chained_decorators_closure_binding_order_change",
+    "category": "chained_decorator_closure",
+    "description": "Trocar a ordem de referências ligadas em uma closure encadeada altera o hash.",
+    "left": "@usar((lambda a: lambda b: lambda c: a - b - c)(1)(2))\n@auditar(lambda x: x)\ndef executar(x):\n    return x\n",
+    "right": "@usar((lambda a: lambda b: lambda c: b - a - c)(1)(2))\n@auditar(lambda x: x)\ndef executar(x):\n    return x\n",
+    "selector": "executar",
+    "expect_equal": false
+  },
+  {
+    "id": "async_generator_yield_alpha_rename",
+    "category": "async_generator_yield",
+    "description": "Async generator com yield preserva o hash sob renomeação alfa.",
+    "left": "async def gerar(fonte):\n    async for item in fonte:\n        yield item.valor\n",
+    "right": "async def gerar(origem):\n    async for registro in origem:\n        yield registro.valor\n",
+    "selector": "gerar",
+    "expect_equal": true
+  },
+  {
+    "id": "async_generator_yield_from_loop_filter_alpha_rename",
+    "category": "async_generator_yield",
+    "description": "Bindings usados em condição e yield são normalizados consistentemente.",
+    "left": "async def gerar(fonte):\n    async for item in fonte:\n        if item.ativo:\n            yield item.valor\n",
+    "right": "async def gerar(origem):\n    async for registro in origem:\n        if registro.ativo:\n            yield registro.valor\n",
+    "selector": "gerar",
+    "expect_equal": true
+  },
+  {
+    "id": "async_generator_yield_await_alpha_rename",
+    "category": "async_generator_yield",
+    "description": "Yield de uma expressão aguardada preserva equivalência alfa.",
+    "left": "async def gerar(fonte):\n    async for item in fonte:\n        yield await transformar(item)\n",
+    "right": "async def gerar(origem):\n    async for registro in origem:\n        yield await transformar(registro)\n",
+    "selector": "gerar",
+    "expect_equal": true
+  },
+  {
+    "id": "nested_async_generator_functions_yield_alpha_rename",
+    "category": "async_generator_yield",
+    "description": "Async generator aninhado com yield preserva profundidade de bindings.",
+    "left": "async def externo(fontes):\n    async def interno(fonte):\n        async for item in fonte:\n            yield item.valor\n    async for fonte in fontes:\n        async for valor in interno(fonte):\n            yield valor\n",
+    "right": "async def externo(origens):\n    async def interno(origem):\n        async for registro in origem:\n            yield registro.valor\n    async for origem in origens:\n        async for resultado in interno(origem):\n            yield resultado\n",
+    "selector": "externo",
+    "expect_equal": true
+  },
+  {
+    "id": "async_generator_yield_attribute_change",
+    "category": "async_generator_yield",
+    "description": "Alterar atributo entregue por yield muda o hash.",
+    "left": "async def gerar(fonte):\n    async for item in fonte:\n        yield item.preco\n",
+    "right": "async def gerar(fonte):\n    async for item in fonte:\n        yield item.quantidade\n",
+    "selector": "gerar",
+    "expect_equal": false
+  },
+  {
+    "id": "async_generator_yield_await_callee_change",
+    "category": "async_generator_yield",
+    "description": "Alterar chamada aguardada antes de yield muda o hash.",
+    "left": "async def gerar(fonte):\n    async for item in fonte:\n        yield await transformar(item)\n",
+    "right": "async def gerar(fonte):\n    async for item in fonte:\n        yield await validar(item)\n",
+    "selector": "gerar",
+    "expect_equal": false
+  },
+  {
+    "id": "async_generator_yield_vs_return_change",
+    "category": "async_generator_yield",
+    "description": "Yield e return são nós estruturalmente distintos.",
+    "left": "async def gerar(item):\n    yield item\n",
+    "right": "async def gerar(item):\n    return item\n",
+    "selector": "gerar",
+    "expect_equal": false
+  },
+  {
+    "id": "async_generator_yield_order_change",
+    "category": "async_generator_yield",
+    "description": "Alterar a ordem de yields muda o hash.",
+    "left": "async def gerar(item):\n    yield item\n    yield item + 1\n",
+    "right": "async def gerar(item):\n    yield item + 1\n    yield item\n",
+    "selector": "gerar",
+    "expect_equal": false
+  },
+  {
+    "id": "parameterized_decorator_chain_alpha_rename",
+    "category": "parameterized_decorator_chain",
+    "description": "Cadeia de decorators parametrizados preserva alfa-equivalência da função.",
+    "left": "@cache(ttl=60)\n@rota(\"/itens\", metodo=\"GET\")\ndef listar(x):\n    resultado = x.valor\n    return resultado\n",
+    "right": "@cache(ttl=60)\n@rota(\"/itens\", metodo=\"GET\")\ndef listar(item):\n    retorno = item.valor\n    return retorno\n",
+    "selector": "listar",
+    "expect_equal": true
+  },
+  {
+    "id": "parameterized_decorator_chain_argument_order_preserved",
+    "category": "parameterized_decorator_chain",
+    "description": "Mesmos parâmetros e mesma ordem mantêm o hash.",
+    "left": "@autorizar(\"admin\", escopo=\"leitura\")\n@cache(ttl=60, chave=\"itens\")\ndef listar(x):\n    return x\n",
+    "right": "@autorizar(\"admin\", escopo=\"leitura\")\n@cache(ttl=60, chave=\"itens\")\ndef listar(valor):\n    return valor\n",
+    "selector": "listar",
+    "expect_equal": true
+  },
+  {
+    "id": "parameterized_decorator_chain_order_change",
+    "category": "parameterized_decorator_chain",
+    "description": "Trocar a ordem dos decorators parametrizados altera o hash.",
+    "left": "@cache(ttl=60)\n@rota(\"/itens\")\ndef listar(x):\n    return x\n",
+    "right": "@rota(\"/itens\")\n@cache(ttl=60)\ndef listar(x):\n    return x\n",
+    "selector": "listar",
+    "expect_equal": false
+  },
+  {
+    "id": "parameterized_decorator_chain_positional_change",
+    "category": "parameterized_decorator_chain",
+    "description": "Alterar argumento posicional em um decorator da cadeia muda o hash.",
+    "left": "@cache(60)\n@rota(\"/itens\")\ndef listar(x):\n    return x\n",
+    "right": "@cache(120)\n@rota(\"/itens\")\ndef listar(x):\n    return x\n",
+    "selector": "listar",
+    "expect_equal": false
+  },
+  {
+    "id": "parameterized_decorator_chain_keyword_change",
+    "category": "parameterized_decorator_chain",
+    "description": "Alterar argumento nomeado em um decorator da cadeia muda o hash.",
+    "left": "@cache(ttl=60)\n@rota(\"/itens\", metodo=\"GET\")\ndef listar(x):\n    return x\n",
+    "right": "@cache(ttl=60)\n@rota(\"/itens\", metodo=\"POST\")\ndef listar(x):\n    return x\n",
+    "selector": "listar",
+    "expect_equal": false
+  },
+  {
+    "id": "parameterized_decorator_chain_factory_change",
+    "category": "parameterized_decorator_chain",
+    "description": "Alterar a factory de um decorator parametrizado muda o hash.",
+    "left": "@cache(ttl=60)\n@rota(\"/itens\")\ndef listar(x):\n    return x\n",
+    "right": "@memoize(ttl=60)\n@rota(\"/itens\")\ndef listar(x):\n    return x\n",
+    "selector": "listar",
+    "expect_equal": false
+  },
+  {
+    "id": "parameterized_decorator_chain_nested_call_alpha_rename",
+    "category": "parameterized_decorator_chain",
+    "description": "Chamadas parametrizadas aninhadas e lambdas mantêm equivalência alfa.",
+    "left": "@configurar(regra(\"leitura\"), parser=lambda dado: dado.id)\n@cache(ttl=obter_ttl())\ndef listar(x):\n    return x\n",
+    "right": "@configurar(regra(\"leitura\"), parser=lambda registro: registro.id)\n@cache(ttl=obter_ttl())\ndef listar(valor):\n    return valor\n",
+    "selector": "listar",
+    "expect_equal": true
+  },
+  {
+    "id": "parameterized_decorator_chain_nested_call_change",
+    "category": "parameterized_decorator_chain",
+    "description": "Alterar chamada aninhada em argumento parametrizado muda o hash.",
+    "left": "@configurar(regra(\"leitura\"))\n@cache(ttl=obter_ttl())\ndef listar(x):\n    return x\n",
+    "right": "@configurar(politica(\"leitura\"))\n@cache(ttl=obter_ttl())\ndef listar(x):\n    return x\n",
+    "selector": "listar",
+    "expect_equal": false
+  },
+  {
+    "id": "generator_yield_from_alpha_rename",
+    "category": "generator_yield_from",
+    "description": "Generator com yield from preserva o hash sob renomeação alfa.",
+    "left": "def gerar(itens):\n    yield from itens\n",
+    "right": "def gerar(valores):\n    yield from valores\n",
+    "selector": "gerar",
+    "expect_equal": true
+  },
+  {
+    "id": "generator_yield_from_local_binding_alpha_rename",
+    "category": "generator_yield_from",
+    "description": "Yield from sobre variável local renomeada consistentemente preserva o hash.",
+    "left": "def gerar(fonte):\n    valores = transformar(fonte)\n    yield from valores\n",
+    "right": "def gerar(origem):\n    resultados = transformar(origem)\n    yield from resultados\n",
+    "selector": "gerar",
+    "expect_equal": true
+  },
+  {
+    "id": "nested_generator_yield_from_alpha_rename",
+    "category": "generator_yield_from",
+    "description": "Generator interno delegado por yield from preserva profundidade e slots.",
+    "left": "def externo(itens):\n    def interno(valores):\n        for valor in valores:\n            yield valor * 2\n    yield from interno(itens)\n",
+    "right": "def externo(dados):\n    def interno(registros):\n        for registro in registros:\n            yield registro * 2\n    yield from interno(dados)\n",
+    "selector": "externo",
+    "expect_equal": true
+  },
+  {
+    "id": "multiple_yield_from_order_preserved",
+    "category": "generator_yield_from",
+    "description": "A ordem de múltiplos yield from é preservada.",
+    "left": "def gerar(primeiro, segundo):\n    yield from primeiro\n    yield from segundo\n",
+    "right": "def gerar(a, b):\n    yield from a\n    yield from b\n",
+    "selector": "gerar",
+    "expect_equal": true
+  },
+  {
+    "id": "yield_from_source_change",
+    "category": "generator_yield_from",
+    "description": "Trocar a origem delegada por yield from altera o hash.",
+    "left": "def gerar(primeiro, segundo):\n    yield from primeiro\n",
+    "right": "def gerar(primeiro, segundo):\n    yield from segundo\n",
+    "selector": "gerar",
+    "expect_equal": false
+  },
+  {
+    "id": "yield_from_vs_yield_change",
+    "category": "generator_yield_from",
+    "description": "YieldFrom e Yield são nós estruturalmente distintos.",
+    "left": "def gerar(itens):\n    yield from itens\n",
+    "right": "def gerar(itens):\n    yield itens\n",
+    "selector": "gerar",
+    "expect_equal": false
+  },
+  {
+    "id": "yield_from_callee_change",
+    "category": "generator_yield_from",
+    "description": "Alterar a chamada que produz o iterável delegado muda o hash.",
+    "left": "def gerar(itens):\n    yield from transformar(itens)\n",
+    "right": "def gerar(itens):\n    yield from validar(itens)\n",
+    "selector": "gerar",
+    "expect_equal": false
+  },
+  {
+    "id": "multiple_yield_from_order_change",
+    "category": "generator_yield_from",
+    "description": "Inverter a ordem das delegações altera o hash.",
+    "left": "def gerar(primeiro, segundo):\n    yield from primeiro\n    yield from segundo\n",
+    "right": "def gerar(primeiro, segundo):\n    yield from segundo\n    yield from primeiro\n",
+    "selector": "gerar",
+    "expect_equal": false
+  },
+  {
+    "id": "decorator_star_args_alpha_rename",
+    "category": "decorator_star_args_kwargs",
+    "description": "Decorator com *args preserva alfa-equivalência do corpo da função.",
+    "left": "@configurar(*opcoes)\ndef executar(x):\n    resultado = x.valor\n    return resultado\n",
+    "right": "@configurar(*opcoes)\ndef executar(item):\n    retorno = item.valor\n    return retorno\n",
+    "selector": "executar",
+    "expect_equal": true
+  },
+  {
+    "id": "decorator_double_star_kwargs_alpha_rename",
+    "category": "decorator_star_args_kwargs",
+    "description": "Decorator com **kwargs preserva alfa-equivalência do corpo.",
+    "left": "@configurar(**politicas)\ndef executar(x):\n    return x\n",
+    "right": "@configurar(**politicas)\ndef executar(valor):\n    return valor\n",
+    "selector": "executar",
+    "expect_equal": true
+  },
+  {
+    "id": "decorator_star_and_double_star_chain_alpha_rename",
+    "category": "decorator_star_args_kwargs",
+    "description": "Cadeia com *args e **kwargs mantém o hash sob renomeação local.",
+    "left": "@auditar(*regras, **contexto)\n@configurar(*opcoes, **parametros)\ndef executar(x):\n    return x\n",
+    "right": "@auditar(*regras, **contexto)\n@configurar(*opcoes, **parametros)\ndef executar(valor):\n    return valor\n",
+    "selector": "executar",
+    "expect_equal": true
+  },
+  {
+    "id": "decorator_star_args_source_change",
+    "category": "decorator_star_args_kwargs",
+    "description": "Alterar a referência expandida por *args muda o hash.",
+    "left": "@configurar(*opcoes)\ndef executar(x):\n    return x\n",
+    "right": "@configurar(*alternativas)\ndef executar(x):\n    return x\n",
+    "selector": "executar",
+    "expect_equal": false
+  },
+  {
+    "id": "decorator_double_star_kwargs_source_change",
+    "category": "decorator_star_args_kwargs",
+    "description": "Alterar a referência expandida por **kwargs muda o hash.",
+    "left": "@configurar(**politicas)\ndef executar(x):\n    return x\n",
+    "right": "@configurar(**permissoes)\ndef executar(x):\n    return x\n",
+    "selector": "executar",
+    "expect_equal": false
+  },
+  {
+    "id": "decorator_star_vs_regular_argument_change",
+    "category": "decorator_star_args_kwargs",
+    "description": "Argumento expandido e argumento regular são estruturalmente distintos.",
+    "left": "@configurar(*opcoes)\ndef executar(x):\n    return x\n",
+    "right": "@configurar(opcoes)\ndef executar(x):\n    return x\n",
+    "selector": "executar",
+    "expect_equal": false
+  },
+  {
+    "id": "decorator_double_star_vs_keyword_change",
+    "category": "decorator_star_args_kwargs",
+    "description": "**kwargs e keyword explícita são estruturalmente distintos.",
+    "left": "@configurar(**politicas)\ndef executar(x):\n    return x\n",
+    "right": "@configurar(politicas=politicas)\ndef executar(x):\n    return x\n",
+    "selector": "executar",
+    "expect_equal": false
+  },
+  {
+    "id": "decorator_star_kwargs_chain_order_change",
+    "category": "decorator_star_args_kwargs",
+    "description": "Trocar a ordem da cadeia com expansões altera o hash.",
+    "left": "@auditar(*regras)\n@configurar(**parametros)\ndef executar(x):\n    return x\n",
+    "right": "@configurar(**parametros)\n@auditar(*regras)\ndef executar(x):\n    return x\n",
+    "selector": "executar",
+    "expect_equal": false
+  }
+]

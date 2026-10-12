@@ -1,0 +1,40 @@
+name: Origo CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.11', '3.12', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - run: python -m pip install -e ./origo-alpha-ast
+      - run: python -m unittest discover -s origo-alpha-ast/tests -v
+      - run: python -m unittest discover -s tests -v
+      - run: python scripts/run_all_vectors.py
+      - run: python -m pip wheel ./origo-alpha-ast --no-deps -w dist
+
+  rust:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+      - run: cargo fmt --manifest-path origo-overlay/Cargo.toml --check
+      - run: cargo check --manifest-path origo-overlay/Cargo.toml
+      - run: cargo check --manifest-path origo-overlay/Cargo.toml --examples
+      - run: cargo test --manifest-path origo-overlay/Cargo.toml
+      - run: cargo clippy --manifest-path origo-overlay/Cargo.toml --all-targets -- -D warnings

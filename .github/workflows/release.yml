@@ -1,0 +1,30 @@
+name: Origo release artifacts
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+jobs:
+  release-artifacts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: dtolnay/rust-toolchain@stable
+      - run: python -m pip install -e ./origo-alpha-ast
+      - run: python scripts/run_all_vectors.py
+      - run: python -m build ./origo-alpha-ast
+      - run: cargo build --manifest-path origo-overlay/Cargo.toml --release
+      - run: sha256sum origo-alpha-ast/dist/* origo-overlay/target/release/origo-overlay > SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: origo-release-${{ github.ref_name }}
+          path: |
+            origo-alpha-ast/dist/
+            origo-overlay/target/release/origo-overlay
+            SHA256SUMS

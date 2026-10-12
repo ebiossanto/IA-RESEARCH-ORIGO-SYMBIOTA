@@ -1,0 +1,10 @@
+Looking in indexes: https://pypi.org/simple/
+Processing ./.
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: origo-alpha-ast
+  Building wheel for origo-alpha-ast (pyproject.toml): started
+  Building wheel for origo-alpha-ast (pyproject.toml): finished with status 'done'
+  Created wheel for origo-alpha-ast: filename=origo_alpha_ast-1.0.0-py3-none-any.whl size=11429 sha256=2c9912981700c6db04fd9bf75deabd7a3cc971cd6e73527ba25e622a58d04d8d
+  Stored in directory: /tmp/pip-ephem-wheel-cache-78ny50kz/wheels/f8/15/c8/06d44053c0443aef8ba651f5bd7c75060d05b5f9730144decf
+Successfully built origo-alpha-ast

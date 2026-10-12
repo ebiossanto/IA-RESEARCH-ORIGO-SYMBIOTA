@@ -1,0 +1,20 @@
+﻿Origo - captura de ambiente
+Data: 2026-10-11 22:36 -03:00
+Host: DESKTOP-SNCVTFN
+OS: Microsoft Windows 10 Pro 10.0.19045 (64 bits)
+CPU: Intel Core i5-3470 @ 3.20GHz
+Python: Python 3.12.10
+Git: git version 2.55.0.windows.3
+GitHub CLI: gh version 2.101.0 (2026-09-15)
+Conta GitHub: ebiossanto
+rustc: rustc 1.99.0 (b940084d7 2026-09-28)
+cargo: cargo 1.99.0 (5f94df478 2026-08-27)
+rustfmt: rustfmt 1.10.0-stable (b940084d7e 2026-09-28)
+clippy: clippy 0.1.99 (b940084d7e 2026-09-28)
+Toolchain ativa: stable-x86_64-pc-windows-gnu (default)
+Sysroot: C:\rustup\toolchains\stable-x86_64-pc-windows-gnu
+Linker C: C:\mingw64\bin\x86_64-w64-mingw32-gcc.exe
+GCC: x86_64-w64-mingw32-gcc.exe (MinGW-W64 x86_64-ucrt-posix-seh, built by Brecht Sanders, r1) 16.2.0
+RUSTUP_HOME: C:\rustup
+CARGO_HOME: C:\cargo
+Caminho do projeto: C:\dev\origo-product-final\origo-product

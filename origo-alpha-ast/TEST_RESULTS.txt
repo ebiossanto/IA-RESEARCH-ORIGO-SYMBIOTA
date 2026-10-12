@@ -1,0 +1,25 @@
+test_all_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_all_vectors) ... ok
+test_ambiguous_selector_fails (test_alpha_ast_hash.AlphaAstVectorTests.test_ambiguous_selector_fails) ... ok
+test_async_comprehension_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_async_comprehension_vectors) ... ok
+test_async_generator_yield_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_async_generator_yield_vectors) ... ok
+test_chained_decorator_closure_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_chained_decorator_closure_vectors) ... ok
+test_comprehension_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_comprehension_vectors) ... ok
+test_decorator_closure_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_decorator_closure_vectors) ... ok
+test_decorator_dict_literal_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_decorator_dict_literal_vectors) ... ok
+test_decorator_lambda_call_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_decorator_lambda_call_vectors) ... ok
+test_decorator_star_args_kwargs_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_decorator_star_args_kwargs_vectors) ... ok
+test_decorator_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_decorator_vectors) ... ok
+test_deterministic (test_alpha_ast_hash.AlphaAstVectorTests.test_deterministic) ... ok
+test_full_selector_resolves (test_alpha_ast_hash.AlphaAstVectorTests.test_full_selector_resolves) ... ok
+test_generator_yield_from_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_generator_yield_from_vectors) ... ok
+test_mixed_decorator_argument_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_mixed_decorator_argument_vectors) ... ok
+test_nested_async_generator_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_nested_async_generator_vectors) ... ok
+test_nested_comprehension_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_nested_comprehension_vectors) ... ok
+test_parameterized_decorator_chain_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_parameterized_decorator_chain_vectors) ... ok
+test_recursive_generator_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_recursive_generator_vectors) ... ok
+test_selector_listing (test_alpha_ast_hash.AlphaAstVectorTests.test_selector_listing) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.166s
+
+OK

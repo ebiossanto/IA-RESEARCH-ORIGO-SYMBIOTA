@@ -1,0 +1,11 @@
+# Perfil conceitual strict
+allow observe
+allow emit
+allow export
+allow warn
+allow reject
+require explicit_activation
+require unicode_scan
+forbid network
+forbid subprocess
+forbid hidden_payload_execution

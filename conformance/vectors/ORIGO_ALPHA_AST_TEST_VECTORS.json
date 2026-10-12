@@ -1,0 +1,199 @@
+[
+  {
+    "id": "parameter_rename",
+    "description": "Renomeação consistente de parâmetro deve preservar o hash.",
+    "left": "lambda x: x * 2",
+    "right": "lambda valor: valor * 2",
+    "expect_equal": true
+  },
+  {
+    "id": "local_rename",
+    "description": "Renomeação consistente de parâmetro e variável local deve preservar o hash.",
+    "left": "def f(x):\n    y = x + 1\n    return y * y\n",
+    "right": "def f(valor):\n    resultado = valor + 1\n    return resultado * resultado\n",
+    "selector": "f",
+    "expect_equal": true
+  },
+  {
+    "id": "formatting_only",
+    "description": "Espaçamento e comentários comuns não entram na AST normalizada.",
+    "left": "lambda x: x + 1",
+    "right": "lambda x : (x + 1)  # comentário\n",
+    "expect_equal": true
+  },
+  {
+    "id": "parameter_order_usage",
+    "description": "Trocar a ordem de uso de parâmetros muda a estrutura.",
+    "left": "lambda a, b: a - b",
+    "right": "lambda a, b: b - a",
+    "expect_equal": false
+  },
+  {
+    "id": "attribute_change",
+    "description": "Nomes de atributos são preservados.",
+    "left": "lambda item: item.preco",
+    "right": "lambda item: item.quantidade",
+    "expect_equal": false
+  },
+  {
+    "id": "literal_change",
+    "description": "Mudança de literal deve alterar o hash.",
+    "left": "lambda x: x * 2",
+    "right": "lambda x: x * 3",
+    "expect_equal": false
+  },
+  {
+    "id": "external_call_change",
+    "description": "Referências externas são preservadas.",
+    "left": "lambda x: validar(x)",
+    "right": "lambda x: excluir(x)",
+    "expect_equal": false
+  },
+  {
+    "id": "capture_name_change",
+    "description": "Capturas livres preservam identidade por nome no perfil v1.",
+    "left": "lambda x: x * taxa",
+    "right": "lambda x: x * desconto",
+    "expect_equal": false
+  },
+  {
+    "id": "statement_order",
+    "description": "A ordem dos statements é preservada.",
+    "left": "def f(x):\n    a = log(x)\n    b = save(x)\n    return a + b\n",
+    "right": "def f(x):\n    b = save(x)\n    a = log(x)\n    return a + b\n",
+    "selector": "f",
+    "expect_equal": false
+  },
+  {
+    "id": "nested_alpha_equivalence",
+    "description": "Bindings locais em função aninhada também são normalizados.",
+    "left": "def outer(x):\n    return lambda y: x + y\n",
+    "right": "def outer(valor):\n    return lambda item: valor + item\n",
+    "selector": "outer",
+    "expect_equal": true
+  },
+  {
+    "id": "default_value_change",
+    "description": "Defaults fazem parte da identidade estrutural.",
+    "left": "lambda x=1: x * 2",
+    "right": "lambda x=2: x * 2",
+    "expect_equal": false
+  },
+  {
+    "id": "async_difference",
+    "description": "Função síncrona e assíncrona são estruturalmente distintas.",
+    "left": "def f(x):\n    return processar(x)\n",
+    "right": "async def f(x):\n    return await processar(x)\n",
+    "selector": "f",
+    "expect_equal": false
+  },
+  {
+    "id": "list_comprehension_target_rename",
+    "category": "comprehension",
+    "description": "Renomear consistentemente o binding local de uma list comprehension preserva o hash.",
+    "left": "lambda itens: [item * 2 for item in itens]",
+    "right": "lambda valores: [valor * 2 for valor in valores]",
+    "expect_equal": true
+  },
+  {
+    "id": "list_comprehension_filter_target_rename",
+    "category": "comprehension",
+    "description": "O binding da comprehension também é normalizado dentro de filtros.",
+    "left": "lambda itens: [item.preco for item in itens if item.ativo]",
+    "right": "lambda dados: [registro.preco for registro in dados if registro.ativo]",
+    "expect_equal": true
+  },
+  {
+    "id": "nested_comprehension_target_rename",
+    "category": "comprehension",
+    "description": "Bindings em generators sucessivos preservam relações lexicais.",
+    "left": "lambda matriz: [valor for linha in matriz for valor in linha]",
+    "right": "lambda dados: [elemento for grupo in dados for elemento in grupo]",
+    "expect_equal": true
+  },
+  {
+    "id": "dict_comprehension_target_rename",
+    "category": "comprehension",
+    "description": "Chave e valor de dict comprehension usam os mesmos bindings normalizados.",
+    "left": "lambda itens: {item.id: item.preco for item in itens}",
+    "right": "lambda registros: {registro.id: registro.preco for registro in registros}",
+    "expect_equal": true
+  },
+  {
+    "id": "generator_expression_target_rename",
+    "category": "comprehension",
+    "description": "Generator expressions são alfa-equivalentes sob renomeação do alvo.",
+    "left": "lambda itens: sum(item.valor for item in itens)",
+    "right": "lambda dados: sum(registro.valor for registro in dados)",
+    "expect_equal": true
+  },
+  {
+    "id": "comprehension_attribute_change",
+    "category": "comprehension",
+    "description": "Mudar o atributo acessado dentro da comprehension altera o hash.",
+    "left": "lambda itens: [item.preco for item in itens]",
+    "right": "lambda itens: [item.quantidade for item in itens]",
+    "expect_equal": false
+  },
+  {
+    "id": "comprehension_filter_change",
+    "category": "comprehension",
+    "description": "Mudar a condição de filtro altera a estrutura.",
+    "left": "lambda itens: [item for item in itens if item.ativo]",
+    "right": "lambda itens: [item for item in itens if item.bloqueado]",
+    "expect_equal": false
+  },
+  {
+    "id": "comprehension_generator_order_change",
+    "category": "comprehension",
+    "description": "Mudar a ordem dos generators altera o hash.",
+    "left": "lambda xs, ys: [(x, y) for x in xs for y in ys]",
+    "right": "lambda xs, ys: [(x, y) for y in ys for x in xs]",
+    "expect_equal": false
+  },
+  {
+    "id": "decorated_function_local_rename",
+    "category": "decorator",
+    "description": "Renomeações locais preservam o hash quando o decorator permanece igual.",
+    "left": "@auditar\ndef calcular(x):\n    resultado = x * 2\n    return resultado\n",
+    "right": "@auditar\ndef calcular(valor):\n    total = valor * 2\n    return total\n",
+    "selector": "calcular",
+    "expect_equal": true
+  },
+  {
+    "id": "decorator_name_change",
+    "category": "decorator",
+    "description": "Trocar o decorator externo altera o hash.",
+    "left": "@auditar\ndef calcular(x):\n    return x * 2\n",
+    "right": "@autorizar\ndef calcular(x):\n    return x * 2\n",
+    "selector": "calcular",
+    "expect_equal": false
+  },
+  {
+    "id": "decorator_argument_change",
+    "category": "decorator",
+    "description": "Argumentos de decorators fazem parte da identidade estrutural.",
+    "left": "@cache(ttl=60)\ndef carregar(x):\n    return buscar(x)\n",
+    "right": "@cache(ttl=120)\ndef carregar(x):\n    return buscar(x)\n",
+    "selector": "carregar",
+    "expect_equal": false
+  },
+  {
+    "id": "decorator_order_change",
+    "category": "decorator",
+    "description": "A ordem dos decorators é semanticamente relevante e altera o hash.",
+    "left": "@auditar\n@cache\ndef calcular(x):\n    return x * 2\n",
+    "right": "@cache\n@auditar\ndef calcular(x):\n    return x * 2\n",
+    "selector": "calcular",
+    "expect_equal": false
+  },
+  {
+    "id": "decorator_attribute_change",
+    "category": "decorator",
+    "description": "Caminhos de atributos em decorators são preservados.",
+    "left": "@seguranca.auditar\ndef calcular(x):\n    return x * 2\n",
+    "right": "@seguranca.autorizar\ndef calcular(x):\n    return x * 2\n",
+    "selector": "calcular",
+    "expect_equal": false
+  }
+]

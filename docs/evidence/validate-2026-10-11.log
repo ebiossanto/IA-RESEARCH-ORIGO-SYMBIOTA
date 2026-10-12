@@ -1,0 +1,272 @@
+﻿== Python: instala├º├úo e testes ==
+bash.exe : test_all_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_all_vectors) ... ok
+No linha:1 caractere:252
++ ... ython.exe"; & "C:\Program Files\Git\bin\bash.exe" ./scripts/validate. ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (test_all_vector...vectors) ... ok:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+test_ambiguous_selector_fails (test_alpha_ast_hash.AlphaAstVectorTests.test_ambiguous_selector_fails) ... ok
+test_async_comprehension_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_async_comprehension_vectors) ... ok
+test_async_generator_yield_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_async_generator_yield_vectors) ... ok
+test_chained_decorator_closure_vectors 
+(test_alpha_ast_hash.AlphaAstVectorTests.test_chained_decorator_closure_vectors) ... ok
+test_comprehension_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_comprehension_vectors) ... ok
+test_decorator_closure_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_decorator_closure_vectors) ... ok
+test_decorator_dict_literal_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_decorator_dict_literal_vectors) ... 
+ok
+test_decorator_lambda_call_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_decorator_lambda_call_vectors) ... ok
+test_decorator_star_args_kwargs_vectors 
+(test_alpha_ast_hash.AlphaAstVectorTests.test_decorator_star_args_kwargs_vectors) ... ok
+test_decorator_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_decorator_vectors) ... ok
+test_deterministic (test_alpha_ast_hash.AlphaAstVectorTests.test_deterministic) ... ok
+test_full_selector_resolves (test_alpha_ast_hash.AlphaAstVectorTests.test_full_selector_resolves) ... ok
+test_generator_yield_from_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_generator_yield_from_vectors) ... ok
+test_mixed_decorator_argument_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_mixed_decorator_argument_vectors) 
+... ok
+test_nested_async_generator_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_nested_async_generator_vectors) ... 
+ok
+test_nested_comprehension_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_nested_comprehension_vectors) ... ok
+test_parameterized_decorator_chain_vectors 
+(test_alpha_ast_hash.AlphaAstVectorTests.test_parameterized_decorator_chain_vectors) ... ok
+test_recursive_generator_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_recursive_generator_vectors) ... ok
+test_selector_listing (test_alpha_ast_hash.AlphaAstVectorTests.test_selector_listing) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.144s
+
+OK
+test_all_external_vectors (test_conformance_vectors.ExternalConformanceTests.test_all_external_vectors) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.339s
+
+OK
+vectors=635 passed=635 failed=0 files=8
+test_all_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_all_vectors) ... ok
+test_ambiguous_selector_fails (test_alpha_ast_hash.AlphaAstVectorTests.test_ambiguous_selector_fails) ... ok
+test_async_comprehension_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_async_comprehension_vectors) ... ok
+test_async_generator_yield_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_async_generator_yield_vectors) ... ok
+test_chained_decorator_closure_vectors 
+(test_alpha_ast_hash.AlphaAstVectorTests.test_chained_decorator_closure_vectors) ... ok
+test_comprehension_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_comprehension_vectors) ... ok
+test_decorator_closure_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_decorator_closure_vectors) ... ok
+test_decorator_dict_literal_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_decorator_dict_literal_vectors) ... 
+ok
+test_decorator_lambda_call_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_decorator_lambda_call_vectors) ... ok
+test_decorator_star_args_kwargs_vectors 
+(test_alpha_ast_hash.AlphaAstVectorTests.test_decorator_star_args_kwargs_vectors) ... ok
+test_decorator_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_decorator_vectors) ... ok
+test_deterministic (test_alpha_ast_hash.AlphaAstVectorTests.test_deterministic) ... ok
+test_full_selector_resolves (test_alpha_ast_hash.AlphaAstVectorTests.test_full_selector_resolves) ... ok
+test_generator_yield_from_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_generator_yield_from_vectors) ... ok
+test_mixed_decorator_argument_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_mixed_decorator_argument_vectors) 
+... ok
+test_nested_async_generator_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_nested_async_generator_vectors) ... 
+ok
+test_nested_comprehension_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_nested_comprehension_vectors) ... ok
+test_parameterized_decorator_chain_vectors 
+(test_alpha_ast_hash.AlphaAstVectorTests.test_parameterized_decorator_chain_vectors) ... ok
+test_recursive_generator_vectors (test_alpha_ast_hash.AlphaAstVectorTests.test_recursive_generator_vectors) ... ok
+test_selector_listing (test_alpha_ast_hash.AlphaAstVectorTests.test_selector_listing) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.148s
+
+OK
+PASS parameter_rename: equal=True, expected=True
+PASS local_rename: equal=True, expected=True
+PASS formatting_only: equal=True, expected=True
+PASS parameter_order_usage: equal=False, expected=False
+PASS attribute_change: equal=False, expected=False
+PASS literal_change: equal=False, expected=False
+PASS external_call_change: equal=False, expected=False
+PASS capture_name_change: equal=False, expected=False
+PASS statement_order: equal=False, expected=False
+PASS nested_alpha_equivalence: equal=True, expected=True
+PASS default_value_change: equal=False, expected=False
+PASS async_difference: equal=False, expected=False
+PASS list_comprehension_target_rename: equal=True, expected=True
+PASS list_comprehension_filter_target_rename: equal=True, expected=True
+PASS nested_comprehension_target_rename: equal=True, expected=True
+PASS dict_comprehension_target_rename: equal=True, expected=True
+PASS generator_expression_target_rename: equal=True, expected=True
+PASS comprehension_attribute_change: equal=False, expected=False
+PASS comprehension_filter_change: equal=False, expected=False
+PASS comprehension_generator_order_change: equal=False, expected=False
+PASS decorated_function_local_rename: equal=True, expected=True
+PASS decorator_name_change: equal=False, expected=False
+PASS decorator_argument_change: equal=False, expected=False
+PASS decorator_order_change: equal=False, expected=False
+PASS decorator_attribute_change: equal=False, expected=False
+PASS nested_list_comprehension_alpha_rename: equal=True, expected=True
+PASS nested_comprehension_outer_binding_reference: equal=True, expected=True
+PASS nested_comprehension_inner_attribute_change: equal=False, expected=False
+PASS nested_comprehension_inner_filter_change: equal=False, expected=False
+PASS nested_dict_list_comprehension_alpha_rename: equal=True, expected=True
+PASS nested_generator_expression_alpha_rename: equal=True, expected=True
+PASS nested_comprehension_generator_order_change: equal=False, expected=False
+PASS decorator_call_with_lambda_alpha_rename: equal=True, expected=True
+PASS decorator_call_lambda_attribute_change: equal=False, expected=False
+PASS decorator_nested_call_with_lambda_alpha_rename: equal=True, expected=True
+PASS decorator_nested_call_callee_change: equal=False, expected=False
+PASS decorator_factory_call_change: equal=False, expected=False
+PASS decorator_keyword_lambda_alpha_rename: equal=True, expected=True
+PASS decorator_keyword_lambda_literal_change: equal=False, expected=False
+PASS decorator_lambda_capture_change: equal=False, expected=False
+PASS async_list_comprehension_alpha_rename: equal=True, expected=True
+PASS async_comprehension_filter_alpha_rename: equal=True, expected=True
+PASS async_generator_expression_alpha_rename: equal=True, expected=True
+PASS nested_async_comprehension_alpha_rename: equal=True, expected=True
+PASS mixed_async_sync_generators_alpha_rename: equal=True, expected=True
+PASS async_vs_sync_comprehension: equal=False, expected=False
+PASS async_comprehension_filter_change: equal=False, expected=False
+PASS async_comprehension_attribute_change: equal=False, expected=False
+PASS decorator_closure_alpha_rename: equal=True, expected=True
+PASS decorator_closure_capture_relation_change: equal=False, expected=False
+PASS decorator_closure_literal_change: equal=False, expected=False
+PASS decorator_closure_operator_change: equal=False, expected=False
+PASS decorator_closure_keyword_alpha_rename: equal=True, expected=True
+PASS decorator_closure_keyword_literal_change: equal=False, expected=False
+PASS decorator_triple_nested_closure_alpha_rename: equal=True, expected=True
+PASS decorator_closure_binding_order_change: equal=False, expected=False
+PASS nested_async_generator_expression_alpha_rename: equal=True, expected=True
+PASS nested_async_generator_outer_reference: equal=True, expected=True
+PASS nested_async_generator_with_await_alpha_rename: equal=True, expected=True
+PASS nested_async_generator_mixed_levels_alpha_rename: equal=True, expected=True
+PASS nested_async_generator_inner_attribute_change: equal=False, expected=False
+PASS nested_async_generator_await_callee_change: equal=False, expected=False
+PASS nested_async_generator_level_mode_change: equal=False, expected=False
+PASS nested_async_generator_filter_change: equal=False, expected=False
+PASS chained_decorators_closure_alpha_rename: equal=True, expected=True
+PASS chained_decorators_order_change: equal=False, expected=False
+PASS chained_decorators_inner_literal_change: equal=False, expected=False
+PASS chained_decorators_second_closure_operator_change: equal=False, expected=False
+PASS chained_decorators_three_levels_alpha_rename: equal=True, expected=True
+PASS chained_decorators_factory_change: equal=False, expected=False
+PASS chained_decorators_external_capture_change: equal=False, expected=False
+PASS chained_decorators_closure_binding_order_change: equal=False, expected=False
+PASS async_generator_yield_alpha_rename: equal=True, expected=True
+PASS async_generator_yield_from_loop_filter_alpha_rename: equal=True, expected=True
+PASS async_generator_yield_await_alpha_rename: equal=True, expected=True
+PASS nested_async_generator_functions_yield_alpha_rename: equal=True, expected=True
+PASS async_generator_yield_attribute_change: equal=False, expected=False
+PASS async_generator_yield_await_callee_change: equal=False, expected=False
+PASS async_generator_yield_vs_return_change: equal=False, expected=False
+PASS async_generator_yield_order_change: equal=False, expected=False
+PASS parameterized_decorator_chain_alpha_rename: equal=True, expected=True
+PASS parameterized_decorator_chain_argument_order_preserved: equal=True, expected=True
+PASS parameterized_decorator_chain_order_change: equal=False, expected=False
+PASS parameterized_decorator_chain_positional_change: equal=False, expected=False
+PASS parameterized_decorator_chain_keyword_change: equal=False, expected=False
+PASS parameterized_decorator_chain_factory_change: equal=False, expected=False
+PASS parameterized_decorator_chain_nested_call_alpha_rename: equal=True, expected=True
+PASS parameterized_decorator_chain_nested_call_change: equal=False, expected=False
+PASS generator_yield_from_alpha_rename: equal=True, expected=True
+PASS generator_yield_from_local_binding_alpha_rename: equal=True, expected=True
+PASS nested_generator_yield_from_alpha_rename: equal=True, expected=True
+PASS multiple_yield_from_order_preserved: equal=True, expected=True
+PASS yield_from_source_change: equal=False, expected=False
+PASS yield_from_vs_yield_change: equal=False, expected=False
+PASS yield_from_callee_change: equal=False, expected=False
+PASS multiple_yield_from_order_change: equal=False, expected=False
+PASS decorator_star_args_alpha_rename: equal=True, expected=True
+PASS decorator_double_star_kwargs_alpha_rename: equal=True, expected=True
+PASS decorator_star_and_double_star_chain_alpha_rename: equal=True, expected=True
+PASS decorator_star_args_source_change: equal=False, expected=False
+PASS decorator_double_star_kwargs_source_change: equal=False, expected=False
+PASS decorator_star_vs_regular_argument_change: equal=False, expected=False
+PASS decorator_double_star_vs_keyword_change: equal=False, expected=False
+PASS decorator_star_kwargs_chain_order_change: equal=False, expected=False
+PASS mixed_decorator_arguments_alpha_rename: equal=True, expected=True
+PASS mixed_decorator_arguments_chain_alpha_rename: equal=True, expected=True
+PASS mixed_decorator_positional_literal_change: equal=False, expected=False
+PASS mixed_decorator_star_source_change: equal=False, expected=False
+PASS mixed_decorator_keyword_change: equal=False, expected=False
+PASS mixed_decorator_double_star_source_change: equal=False, expected=False
+PASS mixed_decorator_argument_kind_change: equal=False, expected=False
+PASS mixed_decorator_chain_order_change: equal=False, expected=False
+PASS recursive_generator_alpha_rename: equal=True, expected=True
+PASS recursive_generator_with_depth_alpha_rename: equal=True, expected=True
+PASS recursive_generator_base_case_alpha_rename: equal=True, expected=True
+PASS nested_recursive_generator_alpha_rename: equal=True, expected=True
+PASS recursive_generator_attribute_change: equal=False, expected=False
+PASS recursive_generator_callee_change: equal=False, expected=False
+PASS recursive_generator_base_condition_change: equal=False, expected=False
+PASS recursive_generator_step_change: equal=False, expected=False
+PASS decorator_dict_literal_alpha_rename: equal=True, expected=True
+PASS decorator_nested_dict_literal_alpha_rename: equal=True, expected=True
+PASS decorator_dict_literal_with_lambda_alpha_rename: equal=True, expected=True
+PASS decorator_dict_unpack_alpha_rename: equal=True, expected=True
+PASS decorator_dict_literal_value_change: equal=False, expected=False
+PASS decorator_dict_literal_key_change: equal=False, expected=False
+PASS decorator_dict_literal_order_change: equal=False, expected=False
+PASS decorator_dict_unpack_source_change: equal=False, expected=False
+PASS decorator_dict_lambda_attribute_change: equal=False, expected=False
+PASS decorator_dict_computed_value_call_change: equal=False, expected=False
+release checks passed: 130 vectors
+== Python: CLI smoke ==
+f
+== Rust: quality gates ==
+    Checking typenum v1.20.1
+    Checking const-oid v0.10.2
+    Checking cpufeatures v0.3.1
+    Checking cfg-if v1.0.5
+    Checking hybrid-array v0.4.15
+    Checking block-buffer v0.12.1
+    Checking crypto-common v0.2.2
+    Checking digest v0.11.3
+    Checking sha2 v0.11.0
+    Checking origo-overlay v0.3.0 (C:\dev\origo-product-final\origo-product\origo-overlay)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 7.88s
+    Checking origo-overlay v0.3.0 (C:\dev\origo-product-final\origo-product\origo-overlay)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.30s
+   Compiling typenum v1.20.1
+   Compiling const-oid v0.10.2
+   Compiling cpufeatures v0.3.1
+   Compiling cfg-if v1.0.5
+   Compiling hybrid-array v0.4.15
+   Compiling crypto-common v0.2.2
+   Compiling block-buffer v0.12.1
+   Compiling digest v0.11.3
+   Compiling sha2 v0.11.0
+   Compiling origo-overlay v0.3.0 (C:\dev\origo-product-final\origo-product\origo-overlay)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 19.92s
+     Running unittests src\lib.rs (origo-overlay\target\debug\deps\origo_overlay-af7523514cc98dcb.exe)
+
+running 7 tests
+test crypto::tests::sha256_usa_vetor_conhecido ... ok
+test crypto::tests::verifica_hash_real ... ok
+test rust_adapter::tests::indexa_funcoes_parametros_variaveis_e_retorno ... ok
+test crypto::tests::hash_ignora_o_bloco_overlay ... ok
+test rust_adapter::tests::reconhece_assinatura_multilinha_com_genericos ... ok
+test rust_adapter::tests::instrumentacao_adiciona_marcadores_sem_alterar_codigo ... ok
+test rust_adapter::tests::resolve_todos_os_seletores_do_exemplo ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\main.rs (origo-overlay\target\debug\deps\origo_overlay-498c8b792341d0f9.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\overlay.rs (origo-overlay\target\debug\deps\overlay-dc3cc897d8cd51b6.exe)
+
+running 4 tests
+test bloqueia_unicode_invisivel ... ok
+test exige_capacidade ... ok
+test extrai_de_comentario ... ok
+test parseia_sintaxe_minima ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+   Doc-tests origo_overlay
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+    Checking origo-overlay v0.3.0 (C:\dev\origo-product-final\origo-product\origo-overlay)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.02s
+VALIDATION PASSED: Python, 635 vectors and Rust gates
